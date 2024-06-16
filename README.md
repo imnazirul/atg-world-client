@@ -1,3 +1,3 @@
 # ATG - WORLD
 
-**Live Site URL:** [www.royalexplore.com](https://atg-banao.netlify.app/)
+**Live Site URL:** [www.atg-world.com](https://atg-banao.netlify.app/)

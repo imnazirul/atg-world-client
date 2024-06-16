@@ -15,7 +15,7 @@ const Banner = () => {
             <h1 className="text-2xl md:text-3xl font-bold">
               Computer Engineering
             </h1>
-            <p className="max-md:text-sm ">
+            <p className="max-md:text-sm">
               142,765 Computer Engineers follow this
             </p>
           </div>

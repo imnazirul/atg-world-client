@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="hidden md:block sticky top-0 border-b bg-white">
-        <div className=" px-2 container mx-auto flex items-center  font-ibmplex  py-4 justify-between">
+        <div className="px-2 container mx-auto flex items-center  font-ibmplex  py-4 justify-between">
           <div>
             <img src={Logo} alt="logo" />
           </div>
