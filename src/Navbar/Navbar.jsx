@@ -11,7 +11,7 @@ const Navbar = () => {
   const [show, setShow] = useState(true);
   return (
     <>
-      <nav className="hidden md:block sticky top-0 border-b bg-white">
+      <nav className="hidden z-10 md:block sticky top-0 border-b bg-white">
         <div className="px-2 container mx-auto flex items-center  font-ibmplex  py-4 justify-between">
           <div>
             <img src={Logo} alt="logo" />

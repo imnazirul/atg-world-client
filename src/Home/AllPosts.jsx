@@ -8,12 +8,17 @@ import { IoIosEye, IoMdArrowDropdown } from "react-icons/io";
 import { FaRegCalendar } from "react-icons/fa6";
 import { PiBagSimpleLight } from "react-icons/pi";
 import Sidebar from "./Sidebar";
+import { HiDotsHorizontal } from "react-icons/hi";
+import { useState } from "react";
+import { MdLogout } from "react-icons/md";
 
 const AllPosts = () => {
+  const [btnType, setBtnType] = useState(true);
+
   return (
     <div className="container mx-auto">
       <div className="md:mx-24 mt-5 max-md:font-poppins md:font-ibmplex mb-10">
-        <div className="hidden sticky top-[69px] bg-base-100 pt-3 md:flex justify-between border-b pb-4 ">
+        <div className="hidden z-10 sticky top-[69px] bg-base-100 pt-3 md:flex justify-between border-b pb-4 ">
           <div className=" md:flex text-[#8A8A8A]  gap-5 text-lg pt-2">
             <span className="text-black border-b  px-1 border-black font-medium">
               All Post (32)
@@ -23,12 +28,27 @@ const AllPosts = () => {
             <span>Education</span>
             <span>Job</span>
           </div>
-          <div className=" md:flex  gap-4">
+          <div className="hidden lg:flex  gap-4">
             <button className="flex gap-1  items-center px-3 font-medium py-1 rounded bg-[#EDEEF0]">
               Write a Post <TiArrowSortedDown />
             </button>
-            <button className="flex gap-1 px-2 py-1 rounded font-medium items-center bg-[#2F6CE5] text-white">
-              <IoPersonAdd className="text-lg"></IoPersonAdd> Join Group
+            <button
+              onClick={() => setBtnType(!btnType)}
+              className={`flex gap-1 px-2 py-1 rounded font-medium items-center  ${
+                btnType
+                  ? "bg-[#2F6CE5] text-white"
+                  : "text-gray-600 border border-gray-500 bg-transparent"
+              } `}
+            >
+              {btnType ? (
+                <>
+                  <IoPersonAdd className="text-lg"></IoPersonAdd> Join Group
+                </>
+              ) : (
+                <>
+                  <MdLogout className="text-xl"></MdLogout> Leave Group
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -62,10 +82,27 @@ const AllPosts = () => {
                       Brands!{" "}
                     </h1>
                   </div>
-                  <img
-                    src="https://i.ibb.co/1q3tsZh/baseline-more-vert-24px.png"
-                    alt="dot"
-                  />
+
+                  <div className="dropdown dropdown-end">
+                    <div tabIndex={0} role="button" className=" m-1">
+                      {" "}
+                      <HiDotsHorizontal className="text-2xl"></HiDotsHorizontal>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-36"
+                    >
+                      <li>
+                        <a>Edit</a>
+                      </li>
+                      <li>
+                        <a>Report</a>
+                      </li>
+                      <li>
+                        <a>Option 3</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <p className="md:text-[19px] text-[#5C5C5C] mb-8">
                   I’ve worked in UX for the better part of a decade. From now
@@ -113,10 +150,27 @@ const AllPosts = () => {
                       launched by Government
                     </h1>
                   </div>
-                  <img
-                    src="https://i.ibb.co/1q3tsZh/baseline-more-vert-24px.png"
-                    alt="dot"
-                  />
+
+                  <div className="dropdown dropdown-end">
+                    <div tabIndex={0} role="button" className=" m-1">
+                      {" "}
+                      <HiDotsHorizontal className="text-2xl"></HiDotsHorizontal>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-36"
+                    >
+                      <li>
+                        <a>Edit</a>
+                      </li>
+                      <li>
+                        <a>Report</a>
+                      </li>
+                      <li>
+                        <a>Option 3</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <p className="md:text-[19px] text-[#5C5C5C] mb-8">
                   I’ve worked in UX for the better part of a decade. From now
@@ -166,10 +220,27 @@ const AllPosts = () => {
                       Finance & Investment Elite Social Mixer @Lujiazui
                     </h1>
                   </div>
-                  <img
-                    src="https://i.ibb.co/1q3tsZh/baseline-more-vert-24px.png"
-                    alt="dot"
-                  />
+
+                  <div className="dropdown dropdown-end">
+                    <div tabIndex={0} role="button" className=" m-1">
+                      {" "}
+                      <HiDotsHorizontal className="text-2xl"></HiDotsHorizontal>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-36"
+                    >
+                      <li>
+                        <a>Edit</a>
+                      </li>
+                      <li>
+                        <a>Report</a>
+                      </li>
+                      <li>
+                        <a>Option 3</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className=" mb-8 flex gap-3 md:gap-40">
                   <p className="flex max-md:text-sm gap-1 items-center font-medium">
@@ -226,10 +297,27 @@ const AllPosts = () => {
                       Software Developer
                     </h1>
                   </div>
-                  <img
-                    src="https://i.ibb.co/1q3tsZh/baseline-more-vert-24px.png"
-                    alt="dot"
-                  />
+
+                  <div className="dropdown dropdown-end">
+                    <div tabIndex={0} role="button" className=" m-1">
+                      {" "}
+                      <HiDotsHorizontal className="text-2xl"></HiDotsHorizontal>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-36"
+                    >
+                      <li>
+                        <a>Edit</a>
+                      </li>
+                      <li>
+                        <a>Report</a>
+                      </li>
+                      <li>
+                        <a>Option 3</a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
                 <div className="mb-8 flex max-md:flex-col  md:gap-40">
                   <p className="flex max-md:text-sm gap-1 items-center font-medium">
