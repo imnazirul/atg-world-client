@@ -1,22 +1,70 @@
 /* eslint-disable react/no-unescaped-entities */
 import { TiArrowSortedDown, TiDelete } from "react-icons/ti";
 import Logo from "../assets/whole.png";
-import { IoIosSearch } from "react-icons/io";
+import { IoIosEye, IoIosEyeOff, IoIosSearch } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
 import Facebook from "../assets/facebook.png";
-import { useState } from "react";
-import { IoEyeOutline } from "react-icons/io5";
+import { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+import { AuthContext } from "../AuthProvider/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = () => {
   const [show, setShow] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
+  const { createUser, user, setUser } = useContext(AuthContext);
+
+  console.log("userInfo", user);
+
+  // console.log(createUser);
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
+
+  const handleRegister = (formData) => {
+    if (formData.password != formData.confirmPassword) {
+      return setError("confirmPassword", {
+        message: "Password Didn't Match",
+      });
+    }
+
+    const userInfo = {
+      name: formData.name,
+      email: formData.email,
+      username: formData.username,
+    };
+    // console.log(userInfo);
+    createUser(
+      formData.name,
+      formData.email,
+      formData.password,
+      formData.username
+    ).then((res) => {
+      console.log(res.data);
+      if (res.data.message == "Sign Up Successful") {
+        setUser(userInfo);
+        document.getElementById("my_modal_4").close();
+        toast.success("Registration Successful");
+      }
+    });
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+  };
+
   return (
     <>
-      <nav className="hidden z-10 md:block sticky top-0 border-b bg-white">
-        <div className="px-2 container mx-auto flex items-center  font-ibmplex  py-4 justify-between">
+      <Toaster />
+      <nav className=" z-10 md:block sticky top-0 border-b font-poppins bg-white">
+        <div className="px-4 container mx-auto flex items-center  font-ibmplex  py-4 justify-between">
           <div>
-            <img src={Logo} alt="logo" />
+            <img className="w-32" src={Logo} alt="logo" />
           </div>
-          <div className="bg-[#F2F2F2] w-80 max-w-80 px-4 flex items-center gap-1 py-2 rounded-3xl">
+          <div className=" hidden md:flex bg-[#F2F2F2] w-80 max-w-80 px-4  items-center gap-1 py-2 rounded-3xl">
             <IoIosSearch className="text-[#5C5C5C] text-xl"></IoIosSearch>
             <input
               className="w-full placeholder:font-medium placeholder:text-[14px]  outline-none  h-full bg-transparent"
@@ -25,18 +73,40 @@ const Navbar = () => {
             />
           </div>
 
-          <button
-            onClick={() => document.getElementById("my_modal_4").showModal()}
-            className="flex gap-1 items-center"
-          >
-            <p className="text-[#2E2E2E] font-bold">
-              Create account.{" "}
-              <span className="text-[#2F6CE5] font-bold cursor-pointer">
-                It's free!
+          {user ? (
+            <div className="flex gap-1 items-center">
+              <div className="avatar online">
+                <div className="w-9 rounded-full border-2 border-blue-500">
+                  <img src="https://images.assetsdelivery.com/compings_v2/tanyadanuta/tanyadanuta1910/tanyadanuta191000003.jpg" />
+                </div>
+              </div>
+              <span
+                className="font-semibold
+               text-xl font-poppins"
+              >
+                {user.username}
               </span>
-            </p>
-            <TiArrowSortedDown></TiArrowSortedDown>
-          </button>
+              <button
+                onClick={handleLogout}
+                className="btn btn-sm ml-5 bg-blue-500 text-white font-poppins hover:bg-blue-700"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => document.getElementById("my_modal_4").showModal()}
+              className="flex gap-1 items-center"
+            >
+              <p className="text-[#2E2E2E] flex gap-1 items-center font-bold">
+                Create account.{" "}
+                <span className=" hidden md:flex text-[#2F6CE5] font-bold cursor-pointer">
+                  It's free!
+                </span>
+              </p>
+              <TiArrowSortedDown></TiArrowSortedDown>
+            </button>
+          )}
         </div>
       </nav>
 
@@ -75,46 +145,108 @@ const Navbar = () => {
                   Create Account
                 </h1>
                 <form
-                  onClick={(e) => e.preventDefault()}
+                  onSubmit={handleSubmit(handleRegister)}
                   className="grid grid-cols-2"
                 >
                   <div className="">
                     <input
+                      {...register("name", {
+                        required: {
+                          value: true,
+                          message: "Enter Your Name",
+                        },
+                      })}
                       type="text"
-                      placeholder="First Name"
-                      className=" bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium max-md:w-full rounded-none"
+                      placeholder={`${
+                        errors.name ? errors.name.message : "Name"
+                      }`}
+                      className={`bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium max-md:w-full rounded-none ${
+                        errors.name ? "placeholder:text-red-500 " : ""
+                      }`}
                     />
                   </div>
-                  <div>
+
+                  <div className="">
                     <input
+                      {...register("username", {
+                        required: {
+                          value: true,
+                          message: "Enter Username Here",
+                        },
+                      })}
                       type="text"
-                      placeholder="Last Name"
-                      className=" bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium border-l-0 max-md:w-full md:pl-[9px] rounded-none"
+                      placeholder={`${
+                        errors.username ? errors.username.message : "Username"
+                      }`}
+                      className={`bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium border-l-0 max-md:w-full md:pl-[9px] rounded-none ${
+                        errors.username ? "placeholder:text-red-500 " : ""
+                      }`}
                     />
                   </div>
+
                   <div className="col-span-2">
                     <input
+                      {...register("email", {
+                        required: {
+                          value: true,
+                          message: "Enter Email Here",
+                        },
+                      })}
                       type="email"
-                      placeholder="Email"
-                      className=" bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium  w-full border-t-0 rounded-none"
+                      placeholder={`${
+                        errors.email ? errors.email.message : "Email"
+                      }`}
+                      className={` bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium  w-full border-t-0 rounded-none ${
+                        errors.email ? "placeholder:text-red-500 " : ""
+                      }`}
                     />
                   </div>
+
                   <div className="col-span-2 relative">
                     <input
-                      type="password"
-                      placeholder="Password"
-                      className=" bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium border-t-0 w-full rounded-none"
+                      {...register("password", {
+                        required: {
+                          value: true,
+                          message: "Enter password",
+                        },
+                      })}
+                      placeholder={`${
+                        errors.password ? errors.password.message : "Password"
+                      }`}
+                      type={showPassword ? "text" : "password"}
+                      className={`bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium border-t-0 w-full rounded-none ${
+                        errors.password ? "placeholder:text-red-500 " : ""
+                      }`}
                     />
-                    <div className="absolute top-[25%] right-4">
-                      <IoEyeOutline className="text-2xl text-gray-500"></IoEyeOutline>
-                    </div>
+                    <span
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-2xl absolute right-4 top-[25%]"
+                    >
+                      {showPassword ? (
+                        <IoIosEye></IoIosEye>
+                      ) : (
+                        <IoIosEyeOff></IoIosEyeOff>
+                      )}
+                    </span>
                   </div>
                   <div className="col-span-2">
                     <input
+                      {...register("confirmPassword", {
+                        required: {
+                          value: true,
+                          message: "Confirm password!",
+                        },
+                      })}
                       type="password"
                       placeholder="Confirm Password"
-                      className=" bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium border-t-0 w-full  rounded-none"
+                      className={`bg-[#F7F8FA]  px-2 py-3 border border-[#8A8A8A] outline-none md:placeholder:font-medium border-t-0 w-full  rounded-none `}
                     />
+
+                    {errors.confirmPassword && (
+                      <p className="text-red-500 font-semibold font-jost">
+                        {errors.confirmPassword.message}
+                      </p>
+                    )}
                   </div>
                   <div className="col-span-2 max-md:flex max-md:justify-between max-md:items-center mt-4">
                     <button className="btn rounded-3xl bg-[#2F6CE5] text-white font-semibold md:w-full hover:bg-[#2F6CE5] ">
