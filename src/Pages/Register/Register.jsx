@@ -130,28 +130,6 @@ const Register = () => {
                     value: true,
                     message: "Enter password to proceed!",
                   },
-                  minLength: {
-                    value: 6,
-                    message: "Password Must be equal 6 Character or longer",
-                  },
-                  maxLength: {
-                    value: 32,
-                    message: "Password Cannot be longer than 32 characters",
-                  },
-                  validate: {
-                    isLower: (value) => {
-                      if (/[a-z]/.test(value)) {
-                        return true;
-                      }
-                      return "Password Must Contain At Least One Lowercase Character";
-                    },
-                    isUpper: (value) => {
-                      if (/[A-Z]/.test(value)) {
-                        return true;
-                      }
-                      return "Password Must Contain At Least One UpperCase Character";
-                    },
-                  },
                 })}
                 type={showPassword ? "text" : "password"}
                 placeholder="Password"
