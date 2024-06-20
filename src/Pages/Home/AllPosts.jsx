@@ -1,9 +1,9 @@
 import { IoLocationOutline, IoPersonAdd, IoShareSocial } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
-import Image from "../assets/Rectangle 5.png";
-import Image1 from "../assets/Rectangle 51.png";
-import Image2 from "../assets/Rectangle 52.png";
-import Profile from "../assets/Rectangle 31.png";
+import Image from "../../assets/Rectangle 5.png";
+import Image1 from "../../assets/Rectangle 51.png";
+import Image2 from "../../assets/Rectangle 52.png";
+import Profile from "../../assets/Rectangle 31.png";
 import { IoIosEye, IoMdArrowDropdown } from "react-icons/io";
 import { FaRegCalendar } from "react-icons/fa6";
 import { PiBagSimpleLight } from "react-icons/pi";

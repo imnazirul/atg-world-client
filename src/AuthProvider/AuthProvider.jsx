@@ -15,10 +15,17 @@ const AuthProvider = ({ children }) => {
       email,
       password,
     };
-
     // console.log(userInfo);
-
     return axiosPublic.post("/register_user", userInfo);
+  };
+
+  const signIn = (username, password) => {
+    const userInfo = {
+      username,
+      password,
+    };
+
+    return axiosPublic.post("/login", userInfo);
   };
 
   console.log("user", user);
@@ -27,6 +34,7 @@ const AuthProvider = ({ children }) => {
     user,
     createUser,
     setUser,
+    signIn,
   };
 
   return (
