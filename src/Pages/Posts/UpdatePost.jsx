@@ -3,7 +3,7 @@ import useAxiosPublic from "../../CustomHooks/useAxiosPublic";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaPlus } from "react-icons/fa6";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -15,11 +15,20 @@ const UpdatePost = () => {
   const axiosPublic = useAxiosPublic();
   const [btnText, setBtnText] = useState(
     <>
-      <FaPlus className="text-2xl" /> Post
+      <IoIosAddCircleOutline className="text-2xl" /> Update Post
     </>
   );
-  const { data: post, isPending } = useQuery({
+  const {
+    data: post,
+    isPending,
+    refetch,
+  } = useQuery({
     queryKey: ["post", id],
+    queryFn: async () => {
+      const res = await axiosPublic.get(`/post/${id}`);
+
+      return res.data;
+    },
   });
 
   const {
@@ -33,7 +42,7 @@ const UpdatePost = () => {
       setBtnText(
         <>
           <div className="border-blue-400 h-7 w-7 animate-spin rounded-full border-[3px] border-t-white" />
-          ADDING POST...
+          UPDATING POST...
         </>
       );
       if (formData.image.length > 0) {
@@ -53,15 +62,15 @@ const UpdatePost = () => {
           };
 
           //   console.log(PostData);
-          axiosPublic.post("/posts", PostData).then((res) => {
+          axiosPublic.patch(`/posts/${id}`, PostData).then((res) => {
             {
-              if (res.data.insertedId) {
+              if (res.data.modifiedCount > 0) {
                 setBtnText(
                   <>
-                    <FaPlus className="text-2xl" /> Post
+                    <IoIosAddCircleOutline className="text-2xl" /> Post
                   </>
                 );
-                document.getElementById("my_modal_3").close();
+                refetch();
                 Swal.fire({
                   position: "middle",
                   icon: "success",
@@ -82,13 +91,13 @@ const UpdatePost = () => {
         };
         // console.log(PostData);
         axiosPublic.post("/posts", PostData).then((res) => {
-          if (res.data.insertedId) {
+          if (res.data.modifiedCount > 0) {
             setBtnText(
               <>
-                <FaPlus className="text-2xl" /> Post
+                <IoIosAddCircleOutline className="text-2xl" /> Post
               </>
             );
-            document.getElementById("my_modal_3").close();
+            refetch();
             Swal.fire({
               position: "middle",
               icon: "success",
@@ -102,7 +111,7 @@ const UpdatePost = () => {
     } catch (err) {
       setBtnText(
         <>
-          <FaPlus className="text-2xl" /> Post
+          <IoIosAddCircleOutline className="text-2xl" /> Post
         </>
       );
       Swal.fire({
@@ -123,9 +132,9 @@ const UpdatePost = () => {
   }
 
   return (
-    <div className="">
-      <h3 className="font-bold text-2xl text-center uppercase underline">
-        Create New Post
+    <div className=" max-w-xl mt-5 mx-auto">
+      <h3 className="font-bold text-3xl mb-5 text-center uppercase underline">
+        Update Post
       </h3>
       <div className="w-full">
         <form
@@ -170,7 +179,7 @@ const UpdatePost = () => {
               htmlFor="image"
               className="font-semibold font-poppins text-lg"
             >
-              Add Image
+              Add New Image
             </label>
             <input
               {...register("image")}

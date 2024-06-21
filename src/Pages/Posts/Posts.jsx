@@ -3,10 +3,12 @@ import { AiOutlineLike } from "react-icons/ai";
 import { TiArrowSortedDown } from "react-icons/ti";
 import useAxiosPublic from "../../CustomHooks/useAxiosPublic";
 import Swal from "sweetalert2";
-import { FaPlus } from "react-icons/fa6";
+import { IoIosAddCircleOutline } from "react-icons/io";
 import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../AuthProvider/AuthProvider";
+import { Link } from "react-router-dom";
+import { HiDotsVertical } from "react-icons/hi";
 
 const img_hosting_key = "4e462399428a72a6ed028adcf02886dd";
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
@@ -17,7 +19,7 @@ const Posts = () => {
   //   console.log(user);
   const [btnText, setBtnText] = useState(
     <>
-      <FaPlus className="text-2xl" /> Post
+      <IoIosAddCircleOutline className="text-2xl" /> Post
     </>
   );
 
@@ -25,7 +27,7 @@ const Posts = () => {
     data: posts,
     isPending,
     // isError,
-    // refetch,
+    refetch,
   } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
@@ -73,9 +75,10 @@ const Posts = () => {
           axiosPublic.post("/posts", PostData).then((res) => {
             {
               if (res.data.insertedId) {
+                refetch();
                 setBtnText(
                   <>
-                    <FaPlus className="text-2xl" /> Post
+                    <IoIosAddCircleOutline className="text-2xl" /> Post
                   </>
                 );
                 reset();
@@ -102,9 +105,10 @@ const Posts = () => {
         axiosPublic.post("/posts", PostData).then((res) => {
           if (res.data.insertedId) {
             reset();
+            refetch();
             setBtnText(
               <>
-                <FaPlus className="text-2xl" /> Post
+                <IoIosAddCircleOutline className="text-2xl" /> Post
               </>
             );
             document.getElementById("my_modal_3").close();
@@ -121,7 +125,7 @@ const Posts = () => {
     } catch (err) {
       setBtnText(
         <>
-          <FaPlus className="text-2xl" /> Post
+          <IoIosAddCircleOutline className="text-2xl" /> Post
         </>
       );
       Swal.fire({
@@ -135,6 +139,31 @@ const Posts = () => {
         icon: "error",
       });
     }
+  };
+
+  const handleDeletePost = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosPublic.delete(`/posts/${_id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
   };
 
   if (isPending) {
@@ -164,14 +193,33 @@ const Posts = () => {
                 key={post._id}
                 className=" font-poppins flex flex-col h-full justify-between  p-6 space-y-6 overflow-hidden rounded-lg shadow-md border relative"
               >
-                <button
-                  onClick={() =>
-                    document.getElementById("my_modal_1").showModal()
-                  }
-                  className="btn absolute btn-sm bg-blue-500 text-white top-1 hover:bg-blue-500 right-1"
-                >
-                  Edit
-                </button>
+                <div className="dropdown absolute top-1 right-1 dropdown-end">
+                  <div tabIndex={0} role="button" className=" m-1">
+                    {" "}
+                    <HiDotsVertical className="text-2xl"></HiDotsVertical>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-36"
+                  >
+                    <li className="mb-2">
+                      <Link
+                        to={`/update_post/${post?._id}`}
+                        className="btn  btn-sm bg-blue-500 text-white hover:bg-blue-500 "
+                      >
+                        Edit
+                      </Link>{" "}
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => handleDeletePost(post?._id)}
+                        className="btn btn-sm bg-red-500 text-white"
+                      >
+                        Delete
+                      </button>{" "}
+                    </li>
+                  </ul>
+                </div>
                 <div>
                   {post?.image ? (
                     <div className=" h-[180px]  md:h-[200px] rounded-lg overflow-hidden  mb-2">
