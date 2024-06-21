@@ -35,7 +35,7 @@ const Navbar = () => {
       <Toaster />
       <nav className=" z-10 md:block sticky top-0 border-b font-poppins bg-white">
         <div className="px-4 container mx-auto flex items-center   py-4 justify-between">
-          <div className="dropdown dropdown-bottom">
+          <div className="dropdown md:hidden dropdown-bottom">
             <div tabIndex={0} role="button" className="">
               <IoMenu className="text-4xl" />
             </div>
