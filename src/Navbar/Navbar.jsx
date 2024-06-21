@@ -5,33 +5,42 @@ import Logo from "../assets/whole.png";
 import { IoIosSearch } from "react-icons/io";
 import { useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import "./Navbar.css";
 
 const Navbar = () => {
   const { user, setUser } = useContext(AuthContext);
 
   const handleLogout = () => {
     toast.success("Logout Successfully");
+    localStorage.removeItem("user");
     setUser(null);
   };
+
+  const navLinks = (
+    <>
+      <li className="text-lg hover:text-blue-500 font-poppins">
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li className="text-lg hover:text-blue-500 font-poppins">
+        <NavLink to="/posts">All Posts</NavLink>
+      </li>
+    </>
+  );
 
   return (
     <>
       <Toaster />
       <nav className=" z-10 md:block sticky top-0 border-b font-poppins bg-white">
-        <div className="px-4 container mx-auto flex items-center  font-ibmplex  py-4 justify-between">
+        <div className="px-4 container mx-auto flex items-center   py-4 justify-between">
           <div>
-            <img className="w-32" src={Logo} alt="logo" />
+            <h1 className="text-4xl font-semibold bg-gradient-to-r from-blue-700 via-blue-500 to-blue-300 text-transparent bg-clip-text">
+              ESocial
+            </h1>{" "}
           </div>
-          <div className=" hidden md:flex bg-[#F2F2F2] w-80 max-w-80 px-4  items-center gap-1 py-2 rounded-3xl">
-            <IoIosSearch className="text-[#5C5C5C] text-xl"></IoIosSearch>
-            <input
-              className="w-full placeholder:font-medium placeholder:text-[14px]  outline-none  h-full bg-transparent"
-              placeholder="Search for your favorite groups in ATG"
-              type="search"
-            />
-          </div>
+
+          <ul className="flex gap-20">{navLinks}</ul>
 
           {user ? (
             <div className="flex gap-1 items-center">
@@ -40,6 +49,7 @@ const Navbar = () => {
                   <img src="https://images.assetsdelivery.com/compings_v2/tanyadanuta/tanyadanuta1910/tanyadanuta191000003.jpg" />
                 </div>
               </div>
+
               <span
                 className="font-semibold
                text-xl font-poppins"

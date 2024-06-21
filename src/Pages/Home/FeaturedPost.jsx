@@ -1,4 +1,4 @@
-import { IoLocationOutline, IoPersonAdd, IoShareSocial } from "react-icons/io5";
+import { IoLocationOutline, IoShareSocial } from "react-icons/io5";
 import { TiArrowSortedDown } from "react-icons/ti";
 import Image from "../../assets/Rectangle 5.png";
 import Image1 from "../../assets/Rectangle 51.png";
@@ -7,48 +7,21 @@ import Profile from "../../assets/Rectangle 31.png";
 import { IoIosEye, IoMdArrowDropdown } from "react-icons/io";
 import { FaRegCalendar } from "react-icons/fa6";
 import { PiBagSimpleLight } from "react-icons/pi";
-import Sidebar from "./Sidebar";
 import { HiDotsHorizontal } from "react-icons/hi";
-import { useState } from "react";
-import { MdLogout } from "react-icons/md";
 
-const AllPosts = () => {
-  const [btnType, setBtnType] = useState(true);
-
+const FeaturedPost = () => {
   return (
     <div className="container mx-auto">
       <div className="md:mx-24 mt-5 max-md:font-poppins md:font-ibmplex mb-10">
-        <div className="hidden z-10 sticky top-[69px] bg-base-100 pt-3 md:flex justify-between border-b pb-4 ">
+        <div className="hidden z-10 sticky top-[65px] bg-base-100 pt-3 md:flex justify-between border-b pb-4 ">
           <div className=" md:flex text-[#8A8A8A]  gap-5 text-lg pt-2">
             <span className="text-black border-b  px-1 border-black font-medium">
-              All Post (32)
+              Featured Post (32)
             </span>
-            <span>Article</span>
-            <span>Event</span>
-            <span>Education</span>
-            <span>Job</span>
           </div>
           <div className="hidden lg:flex  gap-4">
             <button className="flex gap-1  items-center px-3 font-medium py-1 rounded bg-[#EDEEF0]">
               Write a Post <TiArrowSortedDown />
-            </button>
-            <button
-              onClick={() => setBtnType(!btnType)}
-              className={`flex gap-1 px-2 py-1 rounded font-medium items-center  ${
-                btnType
-                  ? "bg-[#2F6CE5] text-white"
-                  : "text-gray-600 border border-gray-500 bg-transparent"
-              } `}
-            >
-              {btnType ? (
-                <>
-                  <IoPersonAdd className="text-lg"></IoPersonAdd> Join Group
-                </>
-              ) : (
-                <>
-                  <MdLogout className="text-xl"></MdLogout> Leave Group
-                </>
-              )}
             </button>
           </div>
         </div>
@@ -356,13 +329,10 @@ const AllPosts = () => {
               </div>
             </div>
           </div>
-          <div className="hidden md:block  flex-1  gap-1 px-8 pt-8 border-b">
-            <Sidebar></Sidebar>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default AllPosts;
+export default FeaturedPost;

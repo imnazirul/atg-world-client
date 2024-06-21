@@ -1,25 +1,11 @@
-import { FaArrowLeft } from "react-icons/fa6";
-
 const Banner = () => {
   return (
-    <div className="bg-[url('https://i.ibb.co/sVPVZ17/Rectangle-2.png')]  h-[420px] bg-black bg-opacity-50 bg-blend-overlay w-full bg-cover max-md:h-[236px]">
-      <div className="flex justify-between flex-col h-full">
-        <div className="flex md:hidden justify-between items-center  p-2">
-          <FaArrowLeft className="text-white text-2xl"></FaArrowLeft>
-          <button className="btn bg-transparent btn-sm text-white border-2 border-white">
-            Join Group
-          </button>
-        </div>
-        <div className="flex items-end justify-start h-full w-full ">
-          <div className="text-white pb-4 md:pb-16 pl-4 md:pl-24 ">
-            <h1 className="text-2xl md:text-3xl font-bold">
-              Computer Engineering
-            </h1>
-            <p className="max-md:text-sm">
-              142,765 Computer Engineers follow this
-            </p>
-          </div>
-        </div>
+    <div className="bg-[url('https://images.pexels.com/photos/267355/pexels-photo-267355.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')]  h-[420px] bg-black bg-opacity-50 bg-blend-overlay w-full bg-cover max-md:h-[236px]">
+      <div className="flex flex-col justify-center gap-8 text-white h-full items-center font-poppins">
+        <h1 className="text-7xl font-semibold ">ESocial</h1>
+        <p className="text-5xl   font-semibold bg-gradient-to-r from-blue-700 via-blue-500 to-blue-400 text-transparent bg-clip-text">
+          Share Your Thoughts
+        </p>
       </div>
     </div>
   );
