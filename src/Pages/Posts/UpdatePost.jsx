@@ -38,6 +38,7 @@ const UpdatePost = () => {
   } = useForm();
 
   const handleAddPost = async (formData) => {
+    console.log("updating...");
     try {
       setBtnText(
         <>
@@ -61,7 +62,6 @@ const UpdatePost = () => {
             image: imageURL,
           };
 
-          //   console.log(PostData);
           axiosPublic.patch(`/posts/${id}`, PostData).then((res) => {
             {
               if (res.data.modifiedCount > 0) {
@@ -86,11 +86,9 @@ const UpdatePost = () => {
         const PostData = {
           post_title: formData.post_title,
           post_description: formData.post_description,
-          likes: [],
-          comments: [],
         };
         // console.log(PostData);
-        axiosPublic.post("/posts", PostData).then((res) => {
+        axiosPublic.patch(`/posts/${id}`, PostData).then((res) => {
           if (res.data.modifiedCount > 0) {
             setBtnText(
               <>

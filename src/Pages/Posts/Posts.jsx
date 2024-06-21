@@ -187,7 +187,7 @@ const Posts = () => {
               Write a Post <TiArrowSortedDown />
             </button>
           </div>
-          <div className="grid md:grid-cols-3 md:gap-16">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 md:gap-16">
             {posts.map((post) => (
               <div
                 key={post._id}
