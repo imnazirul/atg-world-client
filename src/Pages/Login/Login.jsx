@@ -17,6 +17,7 @@ const Login = () => {
   const axiosPublic = useAxiosPublic();
   const [passMatchErr, setPassMatchErr] = useState(false);
   const [userInfo, setUserInfo] = useState({});
+  const [btnText, setBtnText] = useState("Login");
 
   const {
     register,
@@ -25,19 +26,31 @@ const Login = () => {
   } = useForm();
 
   const handleLogin = (formData) => {
-    signIn(formData.username, formData.password).then((res) => {
-      if (res.data.message === "user not found") {
-        toast.error("User Not Found!");
-      } else if (res.data.message === "Invalid Password") {
-        toast.error("Invalid Password");
-      }
+    setBtnText(
+      <>
+        {" "}
+        <div className="border-blue-400 h-7 w-7 animate-spin rounded-full border-[3px] border-t-white" />{" "}
+        Logging In
+      </>
+    );
+    signIn(formData.username, formData.password)
+      .then((res) => {
+        if (res.data.message === "user not found") {
+          setBtnText("Login");
+          toast.error("User Not Found!");
+        } else if (res.data.message === "Invalid Password") {
+          setBtnText("Login");
+          toast.error("Invalid Password");
+        }
 
-      if (res.data.message === "login successful") {
-        toast.success("Login Successful");
-        setUser(res.data.user);
-        navigate("/");
-      }
-    });
+        if (res.data.message === "login successful") {
+          setBtnText("Login");
+          toast.success("Login Successful");
+          setUser(res.data.user);
+          navigate("/");
+        }
+      })
+      .catch(() => setBtnText("Login"));
   };
 
   const handleForgotPassword = (e) => {
@@ -160,7 +173,7 @@ const Login = () => {
             </label>
             <div className="form-control mt-6">
               <button className="btn bg-blue-500 hover:bg-primary-1 text-lg text-white hover:bg-btn-1">
-                Login
+                {btnText}
               </button>
             </div>
           </form>

@@ -9,6 +9,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { setUser, createUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [btnText, setBtnText] = useState("Sign Up");
 
   const {
     register,
@@ -17,6 +18,13 @@ const Register = () => {
   } = useForm();
 
   const handleRegister = (formData) => {
+    setBtnText(
+      <>
+        {" "}
+        <div className="border-blue-400 h-7 w-7 animate-spin rounded-full border-[3px] border-t-white" />{" "}
+        Signing Up
+      </>
+    );
     const userInfo = {
       name: formData.fullName,
       email: formData.email,
@@ -28,18 +36,23 @@ const Register = () => {
       formData.email,
       formData.password,
       formData.username
-    ).then((res) => {
-      console.log(res.data);
-      if (res.data.message == "Sign Up Successful") {
-        setUser(userInfo);
-        toast.success("Registration Successful");
-        navigate("/");
-      } else if (res.data.message == "Email Already Registered") {
-        toast.error("Email Already Exists");
-      } else {
-        toast.error("Username Has Already Taken ");
-      }
-    });
+    )
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.message == "Sign Up Successful") {
+          setBtnText("Sign Up");
+          setUser(userInfo);
+          toast.success("Registration Successful");
+          navigate("/");
+        } else if (res.data.message == "Email Already Registered") {
+          setBtnText("Sign Up");
+          toast.error("Email Already Exists");
+        } else {
+          setBtnText("Sign Up");
+          toast.error("Username Has Already Taken ");
+        }
+      })
+      .catch(() => setBtnText("Sign Up"));
   };
 
   return (
@@ -155,7 +168,7 @@ const Register = () => {
             </div>
             <div className="form-control mt-6">
               <button className="btn  bg-blue-500 hover:bg-primary-1  text-lg text-white ">
-                Register
+                {btnText}
               </button>
             </div>
           </form>
